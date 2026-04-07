@@ -124,7 +124,19 @@ with tab_main:
                 <div class="kpi-label">{explicacion}</div>
             </div>
             """, unsafe_allow_html=True)
+            # ... (tus tarjetas KPI)
 
+st.divider()
+
+# ←←← PEGA AQUÍ EL BOTÓN DE DESCARGA
+with open("boletin_tecnico.docx", "rb") as file:
+    st.download_button(
+        label="📥 Descargar Boletín Técnico Completo (.docx)",
+        data=file,
+        file_name="Boletin_Tecnico_El_Mapa_de_la_Desigualdad.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        use_container_width=True
+    )
 st.divider()
 st.caption("**Datos:** DANE (ECV/GEIH) y Ministerio de Hacienda (FUT) • Desarrollado como boletín académico - Facultad de Economía de la Universidad Santo Tomás (USTA)")
 
