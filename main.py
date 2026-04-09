@@ -85,8 +85,11 @@ with tab_main:
         <p>Se utilizan <strong>8 departamentos representativos</strong> de las principales regiones del país 
         (Atlántico, Santander, Huila, Risaralda, Meta, Valle del Cauca, Cundinamarca y Bogotá D.C.) 
         y se comparan con la ejecución de ingresos de los 32 departamentos de Colombia.</p>
+        <strong>¿Cuál ha sido el comportamiento de algunos indicadores socioeconómicos y su relación con la ejecución de ingresos 
+    en departamentos representativos de cada región de Colombia entre 2019 y 2024?</strong>       
     </div>
     """, unsafe_allow_html=True)
+    
 
     st.markdown("### Panorama general (promedio de los 8 departamentos seleccionados)")
     st.caption("**Nota:** Los valores que ves abajo son el promedio simple de los 8 departamentos analizados. Sirven como resumen nacional representativo.")
@@ -137,8 +140,23 @@ with open("boletin_tecnico.docx", "rb") as file:
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         use_container_width=True
     )
-st.divider()
-st.caption("**Datos:** DANE (ECV/GEIH) y Ministerio de Hacienda (FUT) • Desarrollado como boletín académico - Facultad de Economía de la Universidad Santo Tomás (USTA)")
+
+# ====================== FUENTES (discretas) ======================
+st.caption("• Boletín académico — Facultad de Economía, Universidad Santo Tomás (USTA)")
+
+with st.expander("📌 Ver fuentes completas y referencias bibliográficas"):
+    st.markdown("""
+    - Departamento Administrativo Nacional de Estadística (DANE). (2020). *Anexo MESEP pobreza monetaria por departamentos 2019*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2020). *Boletín técnico pobreza monetaria por departamentos 2019*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2022). *Anexo nota estadística: Pobreza en Colombia con enfoque de género*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2022). *Anexo pobreza monetaria nacional 2021*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2023). *Pobreza monetaria y pobreza extrema 2022*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2024). *Anexo pobreza monetaria total nacional 2023*.
+    - Departamento Administrativo Nacional de Estadística (DANE). (2025). *Pobreza monetaria y pobreza extrema en Colombia*.
+    - DANE – Gran Encuesta Integrada de Hogares (GEIH) y Encuesta de Calidad de Vida (ECV).
+    - Ministerio de Hacienda y Crédito Público – Ejecución de Ingresos (Formulario Único Territorial - FUT) 2021–2025.
+    - Departamento Nacional de Planeación (DNP) – Formulario CUIPO.
+    """)
 
 # ====================== DEFINICIONES NECESARIAS (pega esto primero) ======================
 COLORES_DEPT = {
@@ -210,6 +228,10 @@ with tab_indicadores:
         fig_line = layout_limpio(fig_line)
         st.plotly_chart(fig_line, use_container_width=True)
 
+        with st.expander("📝 Ver análisis detallado"):
+            st.write("El impacto del COVID-19 en año 2020 se evidencia en un punto máximo de la crisis en" \
+            " especial en departamentos como Huila y Atlántico, que sufrieron los saltos más agresivos, superando el 70% y 65% de pobreza respectivamente.")
+
     # 2. Pobreza Extrema
     with sub_tabs[1]:
         insight_box("La pobreza extrema es el indicador más sensible al choque pandémico.")
@@ -219,6 +241,11 @@ with tab_indicadores:
         fig_ext = layout_limpio(fig_ext)
         st.plotly_chart(fig_ext, use_container_width=True)
 
+        with st.expander("📝 Ver análisis detallado"):
+            st.write("Se evidencia el caso de Valle del Cauca  en año 2020 resultando siendo el dato " \
+            "con el salto más pronunciado en pandemia, pasando de niveles bajos de aproximadamente  7% a ser el líder en pobreza" \
+            " extrema con casi un 28%. Sin embargo a comparación con Huila y Atlántico el Valle del cauca tuvo una mejor recuperación.")
+
     # 3. Gini
     with sub_tabs[2]:
         insight_box("El Gini es el indicador más persistente: ningún departamento del grupo bajó de 0.45.")
@@ -227,6 +254,11 @@ with tab_indicadores:
         fig_gini = agregar_banda_pandemia(fig_gini)
         fig_gini = layout_limpio(fig_gini)
         st.plotly_chart(fig_gini, use_container_width=True)
+
+        with st.expander("📝 Ver análisis detallado"):
+            st.write ("A diferencia de las gráficas de pobreza, aquí la reducción es mucho más lenta y difícil." \
+            " Aunque hay una mejora general desde 2021, los valores se mantienen en un rango alto entre 0.47 y 0.54, " \
+            "lo que nos indica que la riqueza sigue estando muy concentrada a pesar de que la pobreza extrema haya bajado.")   
 
     # 4. Mercado Laboral
     with sub_tabs[3]:
@@ -241,6 +273,12 @@ with tab_indicadores:
                               color_discrete_map=COLORES_DEPT, title="Tasa de desocupación (%)")
             fig_des = agregar_banda_pandemia(fig_des)
             st.plotly_chart(layout_limpio(fig_des), use_container_width=True)
+
+            with st.expander("📝 Ver análisis detallado"):
+                st.write("El impacto fue uniforme en  el 2020 ya que diferencia de la pobreza, donde hubo ciertas brechas," \
+                " el desempleo golpeó a todos por igual en 2020, llevando las tasas a un rango de entre el 17% y 18%" \
+                " según los datos todas las regiones han logrado superar los niveles de empleo que tenían antes de la pandemia," \
+                " sin embargo se puede apreciar que Bogotá tuvo una mayor tasa de desocupación justo en la pandemia, pero fue la que mejor se recupero tras el último registro.")
 
     # 5. Comparador VS
     with sub_tabs[4]:
@@ -306,6 +344,16 @@ with tab_ingresos:
         fig_rank.update_layout(height=600)
         st.plotly_chart(fig_rank, use_container_width=True)
 
+        with st.expander("📝 Ver análisis detallado"):
+            st.write("""
+            El análisis de los ingresos departamentales revela una estructura productiva profundamente rígida y concentrada en Colombia. 
+            Bogotá domina de forma abrumadora con más de 30 billones de COP, superando por más de seis veces a Cundinamarca y casi cuatro veces a Antioquia. 
+            Esta cercanía a Bogotá potencia los ingresos de Cundinamarca, que incluso supera al Valle del Cauca. 
+            Desde 2022 el orden del top 5 (Bogotá, Antioquia, Cundinamarca, Valle y Santander) se ha mantenido inalterado, 
+            consolidando una geografía económica dual y persistentemente desigual.
+            """)
+
+
     # 2. Evolución Temporal
     with sub_tabs_ing[1]:
         df_evo = df_ing[df_ing["Entidad"].isin(depts_ing_sel)]
@@ -330,6 +378,13 @@ with tab_ingresos:
         )
         st.plotly_chart(fig_tree, use_container_width=True)
 
+        with st.expander("📝 Ver análisis detallado"):
+            st.write("""
+            El treemap muestra una altísima concentración de recursos en la región Centro Oriente, liderada claramente por Bogotá D.C. 
+            Esta región representa una proporción muy significativa del total nacional de ingresos departamentales. 
+            Las regiones Caribe y Pacífico muestran una participación mucho menor, reflejando una estructura fiscal fuertemente centralizada.
+            """)
+
     # 4. Por Región (barras apiladas)
     with sub_tabs_ing[3]:
         df_reg = df_ing.groupby(["Año Vigencia", "Region"])["Recaudo_billones"].sum().reset_index()
@@ -342,6 +397,13 @@ with tab_ingresos:
             title="Ingresos totales por región (billones COP)"
         )
         st.plotly_chart(fig_reg, use_container_width=True)
+
+        with st.expander("📝 Ver análisis detallado"):
+            st.write("""
+            En todos los años analizados se evidencia que la región Centro Oriente es, con diferencia, la que más ingresos genera. 
+            Este dominio es impulsado principalmente por Bogotá D.C. y, en segundo lugar, por Cundinamarca. 
+            Las regiones Caribe, Pacífico y Centro Sur mantienen una participación mucho más baja y estable a lo largo del período.
+            """)
 
 st.divider()
 
@@ -408,6 +470,31 @@ with tab_cruzado:
         fig_sc.update_traces(textposition="top center", marker=dict(size=12, opacity=0.85))
         fig_sc.update_layout(height=550)
         st.plotly_chart(fig_sc, use_container_width=True)
+
+        with st.expander("📝 Ver análisis detallado"):
+                st.write("""
+                        Entre 2020 y 2024, Colombia experimentó un choque económico
+                        seguido de una recuperación asimétrica: el mercado laboral actuó
+                        como principal motor, logrando que todos los departamentos superaran
+                        sus niveles de empleo prepandemia y reduciendo drásticamente la pobreza
+                        extrema como en el Valle del Cauca, que pasó de picos superiores al
+                        25% a cifras de un solo dígito, aunque la desigualdad medida por el 
+                        coeficiente de Gini se mantuvo como una "trampa" persistente, sin que 
+                        ningún departamento bajara de 0,45, lo que evidencia que el crecimiento
+                        no ha modificado la estructura distributiva de igual manera, 
+                        los ingresos departamentales revelan una concentración extrema: Bogotá, con
+                        más de 32 billones de COP proyectados para 2025, se erige como un "outlier" 
+                        en regiones enteras, mientras que el centro-oriente liderado por la capital y
+                        Antioquia conforman los únicos nodos de poder económico, dejando a departamentos
+                        como Huila, Tolima o Cesar con ingresos inferiores a los 3 billones. El análisis
+                        de dispersión de 2024 confirma, sin embargo, que el volumen de ingresos no determina
+                        totalmente el bienestar y Huila aparece como el caso crítico con los peores 
+                        indicadores de pobreza y desigualdad, mientras que Cundinamarca demuestra que 
+                        la cercanía a centros económicos y una gestión eficiente pueden lograr niveles
+                        de pobreza similares a los de Bogotá con una fracción de su presupuesto, subrayando
+                        que la escala fiscal y la eficiencia territorial son dimensiones distintas pero
+                        igualmente relevantes en la geografía del desarrollo colombiano.
+                         """)
 
         st.caption("Bogotá suele aparecer como outlier por su tamaño poblacional y económico.")
         
